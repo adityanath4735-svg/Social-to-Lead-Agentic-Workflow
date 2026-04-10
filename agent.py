@@ -39,6 +39,22 @@ SUPPORTED_PLATFORMS = [
     "podcast",
 ]
 
+NON_NAME_SHORT_REPLIES = {
+    "hi",
+    "hello",
+    "hey",
+    "thanks",
+    "thank you",
+    "ok",
+    "okay",
+    "cool",
+    "great",
+    "yes",
+    "yep",
+    "no",
+    "nope",
+}
+
 
 def get_llm() -> Optional[ChatOpenAI]:
     if os.getenv("OPENAI_API_KEY"):
@@ -115,6 +131,8 @@ def extract_lead_fields(text: str, lead: LeadData) -> LeadData:
         else:
             short_reply = text.strip()
             if (
+                short_reply.lower() not in NON_NAME_SHORT_REPLIES
+                and
                 "@" not in short_reply
                 and 1 <= len(short_reply.split()) <= 3
                 and all(token.isalpha() or "-" in token or "'" in token for token in short_reply.split())
