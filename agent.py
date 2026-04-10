@@ -260,12 +260,7 @@ def run_cli() -> None:
             break
 
         result = agent.invoke(
-            {
-                "messages": [HumanMessage(content=user_input)],
-                "intent": "product_pricing_inquiry",
-                "lead": {"name": None, "email": None, "platform": None},
-                "tool_called": False,
-            },
+            {"messages": [HumanMessage(content=user_input)]},
             config=config,
         )
         print(f"Agent: {result['messages'][-1].content}")
